@@ -273,18 +273,32 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/buttonSolve"
+        android:id="@+id/buttonRandom"
         android:layout_width="match_parent"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="30dp"
-        android:padding="10dp"
         android:layout_height="wrap_content"
-        android:text = "Solve"
+        android:layout_marginTop="50dp"
         android:backgroundTint="#f0f0f0"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="180dp"
+        android:layout_marginStart="10dp"
+        android:padding="10dp"
+        android:text="Random"
+        app:layout_constraintEnd_toStartOf="@id/buttonSolve"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_table_goal"
-        tools:ignore="ExtraText">
-    </Button>
+        tools:ignore="ExtraText"></Button>
+
+    <Button
+        android:id="@+id/buttonSolve"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#f0f0f0"
+        android:layout_marginStart="210dp"
+        android:padding="10dp"
+        android:text="Solve"
+        app:layout_constraintEnd_toStartOf="@id/buttonSolve"
+        app:layout_constraintStart_toEndOf="@id/buttonRandom"
+        app:layout_constraintTop_toBottomOf="@id/cv_table_goal"
+        tools:ignore="ExtraText"></Button>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

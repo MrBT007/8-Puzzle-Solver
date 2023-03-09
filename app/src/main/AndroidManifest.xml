@@ -14,8 +14,11 @@
         android:theme="@style/Theme.8PuzzleSolver"
         tools:targetApi="33">
         <activity
+            android:name=".goal_state_popup"
+            android:exported="false" />
+        <activity
             android:name=".stateInitActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,8 +27,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
