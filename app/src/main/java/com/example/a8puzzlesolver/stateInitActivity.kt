@@ -1,6 +1,7 @@
 package com.example.a8puzzlesolver
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,16 +9,22 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.set
 import com.example.a8puzzlesolver.databinding.ActivityStateInitBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
 class stateInitActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStateInitBinding
     private lateinit var initialStateArray: ArrayList<String>
     private lateinit var goalStateArray: ArrayList<String>
-//    private lateinit var randomStatesArray: ArrayList<ArrayList<Int>>
+
+    //    private lateinit var randomStatesArray: ArrayList<ArrayList<Int>>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStateInitBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.title = "Initialize States"
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.title_bar)))
         initialStateArray = ArrayList()
         goalStateArray = ArrayList()
 
@@ -53,7 +60,33 @@ class stateInitActivity : AppCompatActivity() {
             binding.goal22.setText("0")
         }
 
+        binding.buttonClearInitState.setOnClickListener {
+            binding.init00.setText("")
+            binding.init01.setText("")
+            binding.init02.setText("")
+            binding.init10.setText("")
+            binding.init11.setText("")
+            binding.init12.setText("")
+            binding.init20.setText("")
+            binding.init21.setText("")
+            binding.init22.setText("")
+        }
+        binding.buttonClearGoalState.setOnClickListener {
+            binding.goal00.setText("")
+            binding.goal01.setText("")
+            binding.goal02.setText("")
+            binding.goal10.setText("")
+            binding.goal11.setText("")
+            binding.goal12.setText("")
+            binding.goal20.setText("")
+            binding.goal21.setText("")
+            binding.goal22.setText("")
+        }
         binding.buttonSolve.setOnClickListener {
+
+            // stores element. need to delete previous elements before adding new elements.
+            initialStateArray.clear()
+            goalStateArray.clear()
             if (!checkIfTilesAreEmpty()) {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("Tiles are empty")
@@ -70,11 +103,15 @@ class stateInitActivity : AppCompatActivity() {
                     // Do nothing, just close the dialog
                 }
                 builder.show()
-            }
-//            if(solvable()){
-//
-//            }
-            else {
+            } else if (!isSolvable(initialStateArray, goalStateArray)) {
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("State is Invalid")
+                builder.setMessage("Given states are unsolvable!!")
+                builder.setPositiveButton("OK") { dialog, which ->
+                    // Do nothing, just close the dialog
+                }
+                builder.show()
+            } else {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putStringArrayListExtra("initState", initialStateArray)
                 intent.putStringArrayListExtra("goalState", goalStateArray)
@@ -124,39 +161,39 @@ class stateInitActivity : AppCompatActivity() {
 
         //goal
         if (binding.goal00.text.toString() != "") {
-            goalStateArray.add(binding.init00.text.toString())
+            goalStateArray.add(binding.goal00.text.toString())
         } else return false
 
         if (binding.goal01.text.toString() != "") {
-            goalStateArray.add(binding.init01.text.toString())
+            goalStateArray.add(binding.goal01.text.toString())
         } else return false
 
         if (binding.goal02.text.toString() != "") {
-            goalStateArray.add(binding.init02.text.toString())
+            goalStateArray.add(binding.goal02.text.toString())
         } else return false
 
         if (binding.goal10.text.toString() != "") {
-            goalStateArray.add(binding.init10.text.toString())
+            goalStateArray.add(binding.goal10.text.toString())
         } else return false
 
         if (binding.goal11.text.toString() != "") {
-            goalStateArray.add(binding.init11.text.toString())
+            goalStateArray.add(binding.goal11.text.toString())
         } else return false
 
         if (binding.goal12.text.toString() != "") {
-            goalStateArray.add(binding.init12.text.toString())
+            goalStateArray.add(binding.goal12.text.toString())
         } else return false
 
         if (binding.goal20.text.toString() != "") {
-            goalStateArray.add(binding.init20.text.toString())
+            goalStateArray.add(binding.goal20.text.toString())
         } else return false
 
         if (binding.goal21.text.toString() != "") {
-            goalStateArray.add(binding.init21.text.toString())
+            goalStateArray.add(binding.goal21.text.toString())
         } else return false
 
         if (binding.goal22.text.toString() != "") {
-            goalStateArray.add(binding.init22.text.toString())
+            goalStateArray.add(binding.goal22.text.toString())
         } else return false
         return true
     }
@@ -166,7 +203,74 @@ class stateInitActivity : AppCompatActivity() {
         return false
     }
 
-//    private fun solvable():Boolean{
-//        //todo : validate the state such that it won't go in infinite loop.
+    // Function to check if the given puzzle is solvable
+//    private fun isSolvable(
+//        initialStateArray: ArrayList<String>,
+//        goalStateArray: ArrayList<String>
+//    ): Boolean {
+//        val initialState = stringArrayToIntArray(initialStateArray)
+//        val goalState = stringArrayToIntArray(goalStateArray)
+//        val puzzleSize = Math.sqrt(initialState.size.toDouble()).toInt()
+//        var inversionCount = 0
+//        var blankTileRow = 0
+//
+//        // Calculate the inversion count
+//        for (i in 0 until initialState.size - 1) {
+//            for (j in i + 1 until initialState.size) {
+//                if (initialState[i] > initialState[j] && initialState[i] != 0 && initialState[j] != 0) {
+//                    inversionCount++
+//                }
+//            }
+//        }
+//
+//        // Calculate the row of the blank tile
+//        for (i in 0 until initialState.size) {
+//            if (initialState[i] == 0) {
+//                blankTileRow = i / puzzleSize + 1
+//            }
+//        }
+//
+//        // Check if the puzzle is solvable
+//        return if (puzzleSize % 2 == 1) {
+//            inversionCount % 2 == 0
+//        } else {
+//            val blankTileInOddRowFromBottom = (puzzleSize - blankTileRow) % 2 == 1
+//            if (inversionCount % 2 == 0) {
+//                blankTileInOddRowFromBottom
+//            } else {
+//                !blankTileInOddRowFromBottom
+//            }
+//        }
 //    }
+    private fun isSolvable(initialStateArray: ArrayList<String>, goalStateArray: ArrayList<String>): Boolean {
+        val initialState = stringArrayToIntArray(initialStateArray)
+        val goalState = stringArrayToIntArray(goalStateArray)
+        var initialStateInversionCount = countInversions(initialState)
+        var goalStateInversionCount = countInversions(goalState)
+
+        Log.i("StateInit", "Init State Inversion: $initialStateInversionCount")
+        Log.i("StateInit", "Goal State Inversion: $goalStateInversionCount")
+
+        // Check if the parity of the inversion counts is the same
+        return (initialStateInversionCount % 2 == 0 && goalStateInversionCount % 2 == 0) ||
+                (initialStateInversionCount % 2 == 1 && goalStateInversionCount % 2 == 1)
+    }
+
+
+    private fun countInversions(state: IntArray): Int {
+        var count = 0
+        for (i in 0 until state.size - 1) {
+            for (j in i + 1 until state.size) {
+                if (state[i] != 0 && state[j] != 0 && state[i] > state[j]) {
+                    count++
+                }
+            }
+        }
+        return count
+    }
+
+    private fun stringArrayToIntArray(stringArray: ArrayList<String>): IntArray {
+        return stringArray.flatMap { it.split(" ") }.filter { it.isNotEmpty() }.map { it.toInt() }
+            .toIntArray()
+    }
 }

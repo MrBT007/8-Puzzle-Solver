@@ -27,8 +27,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.title = "Solve 8 Puzzle"
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.title_bar)))
+
         textView = findViewById(R.id.i_goal_state_text)
 
+        //showing text for viewing goal state
         val handler = Handler()
         val runnable = object : Runnable {
             override fun run() {
@@ -47,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         handler.post(runnable)
 
 
+        //listing all buttons
         buttons = listOf(
             listOf(
                 findViewById(R.id.button1),
@@ -67,11 +72,12 @@ class MainActivity : AppCompatActivity() {
 
         val initState = intent.getStringArrayListExtra("initState")
         val goalState = intent.getStringArrayListExtra("goalState")
-//
+
+        // getting index of empty tile
         var index = 0
         for (i in 0..2) {
             for (j in 0..2) {
-//                Log.e("Value at $i,$j", "${initState?.get(index)}", )
+               //Log.e("Value at $i,$j", "${initState?.get(index)}", )
                 buttons[i][j].text = initState!![index].toString()
                 if (buttons[i][j].text.toString() == "0") {
                     emptyButtonIndex_i = i
@@ -80,7 +86,18 @@ class MainActivity : AppCompatActivity() {
                 index++
             }
         }
+
+        //initialize pop up view
         val popupView = LayoutInflater.from(this).inflate(R.layout.activity_goal_state_popup, null)
+        popupView.findViewById<TextView>(R.id.popup_goal00).text = goalState?.get(0).toString()
+        popupView.findViewById<TextView>(R.id.popup_goal01).text = goalState?.get(1).toString()
+        popupView.findViewById<TextView>(R.id.popup_goal02).text = goalState?.get(2).toString()
+        popupView.findViewById<TextView>(R.id.popup_goal10).text = goalState?.get(3).toString()
+        popupView.findViewById<TextView>(R.id.popup_goal11).text = goalState?.get(4).toString()
+        popupView.findViewById<TextView>(R.id.popup_goal12).text = goalState?.get(5).toString()
+        popupView.findViewById<TextView>(R.id.popup_goal20).text = goalState?.get(6).toString()
+        popupView.findViewById<TextView>(R.id.popup_goal21).text = goalState?.get(7).toString()
+        popupView.findViewById<TextView>(R.id.popup_goal22).text = goalState?.get(8).toString()
         popupWindow = PopupWindow(popupView, 800, 800)
         popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         popupWindow.animationStyle = R.style.PopupAnimation
