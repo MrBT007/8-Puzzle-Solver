@@ -2,15 +2,20 @@ package com.example.a8puzzlesolver
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
-import android.view.*
-import android.view.animation.AlphaAnimation
+import android.util.DisplayMetrics
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.Button
+import android.widget.PopupWindow
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.a8puzzlesolver.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var buttons: List<List<Button>>
@@ -38,7 +43,12 @@ class MainActivity : AppCompatActivity() {
             override fun run() {
                 // Show the textview with fade-in animation
                 textView.visibility = View.VISIBLE
-                textView.startAnimation(AnimationUtils.loadAnimation(this@MainActivity, R.anim.i_button_fade_in))
+                textView.startAnimation(
+                    AnimationUtils.loadAnimation(
+                        this@MainActivity,
+                        R.anim.i_button_fade_in
+                    )
+                )
 
                 Handler().postDelayed({
                     textView.visibility = View.GONE
@@ -77,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         var index = 0
         for (i in 0..2) {
             for (j in 0..2) {
-               //Log.e("Value at $i,$j", "${initState?.get(index)}", )
+                //Log.e("Value at $i,$j", "${initState?.get(index)}", )
                 buttons[i][j].text = initState!![index].toString()
                 if (buttons[i][j].text.toString() == "0") {
                     emptyButtonIndex_i = i
@@ -98,7 +108,16 @@ class MainActivity : AppCompatActivity() {
         popupView.findViewById<TextView>(R.id.popup_goal20).text = goalState?.get(6).toString()
         popupView.findViewById<TextView>(R.id.popup_goal21).text = goalState?.get(7).toString()
         popupView.findViewById<TextView>(R.id.popup_goal22).text = goalState?.get(8).toString()
-        popupWindow = PopupWindow(popupView, 800, 800)
+
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val height = (displayMetrics.heightPixels * 0.4).toInt() // Set the height to 80% of the screen height
+
+        val width = (displayMetrics.widthPixels * 0.8).toInt() // Set the width to 80% of the screen width
+
+//        var popupWindow = PopupWindow(popupView, width, height)
+
+        popupWindow = PopupWindow(popupView, width, ViewGroup.LayoutParams.WRAP_CONTENT)
         popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         popupWindow.animationStyle = R.style.PopupAnimation
 
@@ -110,7 +129,7 @@ class MainActivity : AppCompatActivity() {
         popupView.findViewById<Button>(R.id.close_button).setOnClickListener {
             popupWindow.dismiss()
         }
-        binding.iButton.setOnClickListener{
+        binding.iButton.setOnClickListener {
             popupWindow.showAtLocation(binding.iButton, Gravity.CENTER, 0, 0)
         }
 
