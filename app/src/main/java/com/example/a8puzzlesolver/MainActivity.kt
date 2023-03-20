@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     var emptyButtonIndex_i: Int = 2
     var emptyButtonIndex_j: Int = 2
-    private lateinit var popupWindow: PopupWindow
+    private lateinit var popupWindowGoalState: PopupWindow
+    private lateinit var popupWindowAlgos: PopupWindow
     private lateinit var handler: Handler
     private lateinit var runnable: Runnable
     private lateinit var textView: TextView
@@ -98,16 +100,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         //initialize pop up view
-        val popupView = LayoutInflater.from(this).inflate(R.layout.activity_goal_state_popup, null)
-        popupView.findViewById<TextView>(R.id.popup_goal00).text = goalState?.get(0).toString()
-        popupView.findViewById<TextView>(R.id.popup_goal01).text = goalState?.get(1).toString()
-        popupView.findViewById<TextView>(R.id.popup_goal02).text = goalState?.get(2).toString()
-        popupView.findViewById<TextView>(R.id.popup_goal10).text = goalState?.get(3).toString()
-        popupView.findViewById<TextView>(R.id.popup_goal11).text = goalState?.get(4).toString()
-        popupView.findViewById<TextView>(R.id.popup_goal12).text = goalState?.get(5).toString()
-        popupView.findViewById<TextView>(R.id.popup_goal20).text = goalState?.get(6).toString()
-        popupView.findViewById<TextView>(R.id.popup_goal21).text = goalState?.get(7).toString()
-        popupView.findViewById<TextView>(R.id.popup_goal22).text = goalState?.get(8).toString()
+        val popviewGoalState = LayoutInflater.from(this).inflate(R.layout.activity_goal_state_popup, null)
+        val popviewAlgos = LayoutInflater.from(this).inflate(R.layout.searching_algo_popup, null)
+        popviewGoalState.findViewById<TextView>(R.id.popup_goal00).text = goalState?.get(0).toString()
+        popviewGoalState.findViewById<TextView>(R.id.popup_goal01).text = goalState?.get(1).toString()
+        popviewGoalState.findViewById<TextView>(R.id.popup_goal02).text = goalState?.get(2).toString()
+        popviewGoalState.findViewById<TextView>(R.id.popup_goal10).text = goalState?.get(3).toString()
+        popviewGoalState.findViewById<TextView>(R.id.popup_goal11).text = goalState?.get(4).toString()
+        popviewGoalState.findViewById<TextView>(R.id.popup_goal12).text = goalState?.get(5).toString()
+        popviewGoalState.findViewById<TextView>(R.id.popup_goal20).text = goalState?.get(6).toString()
+        popviewGoalState.findViewById<TextView>(R.id.popup_goal21).text = goalState?.get(7).toString()
+        popviewGoalState.findViewById<TextView>(R.id.popup_goal22).text = goalState?.get(8).toString()
 
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -117,21 +120,35 @@ class MainActivity : AppCompatActivity() {
 
 //        var popupWindow = PopupWindow(popupView, width, height)
 
-        popupWindow = PopupWindow(popupView, width, ViewGroup.LayoutParams.WRAP_CONTENT)
-        popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        popupWindow.animationStyle = R.style.PopupAnimation
 
-        val closeButton = popupView.findViewById<Button>(R.id.close_button)
+        popupWindowGoalState = PopupWindow(popviewGoalState, width, ViewGroup.LayoutParams.WRAP_CONTENT)
+        popupWindowAlgos = PopupWindow(popviewAlgos,width,ViewGroup.LayoutParams.WRAP_CONTENT)
+        popupWindowGoalState.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        popupWindowAlgos.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        popupWindowGoalState.animationStyle = R.style.PopupAnimation
+        popupWindowAlgos.animationStyle = R.style.PopupAnimation
+
+        val closeButton = popviewGoalState.findViewById<Button>(R.id.close_button)
+        val closeButtonSearchingAlgo = popviewAlgos.findViewById<ImageButton>(R.id.closeButtonSearchingAlgosPopup)
         closeButton.setOnClickListener {
-            popupWindow.dismiss()
+            popupWindowGoalState.dismiss()
+        }
+        closeButtonSearchingAlgo.setOnClickListener {
+            popupWindowAlgos.dismiss()
         }
 
-        popupView.findViewById<Button>(R.id.close_button).setOnClickListener {
-            popupWindow.dismiss()
-        }
+//        popviewGoalState.findViewById<Button>(R.id.close_button).setOnClickListener {
+//            popupWindowGoalState.dismiss()
+//        }
         binding.iButton.setOnClickListener {
-            popupWindow.showAtLocation(binding.iButton, Gravity.CENTER, 0, 0)
+            popupWindowGoalState.showAtLocation(binding.iButton, Gravity.CENTER, 0, 0)
         }
+
+        binding.buttonSolveAI.setOnClickListener{
+            popupWindowAlgos.showAtLocation(binding.buttonSolveAI,Gravity.CENTER,0,0)
+        }
+
+
 
         buttons[emptyButtonIndex_i][emptyButtonIndex_j].setBackgroundColor(Color.parseColor("#5a5a5a"))
         buttons.forEachIndexed { i, row ->
