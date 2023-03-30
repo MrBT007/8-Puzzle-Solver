@@ -8,30 +8,30 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/i_goal_state_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:text="Click to view Goal State"
             android:textColor="#f0f0f0"
-            android:textSize="16sp"
-            android:layout_marginEnd="10dp"/>
+            android:textSize="16sp" />
 
         <ImageButton
             android:id="@+id/iButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_info_24"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_baseline_info_24" />
 
     </LinearLayout>
 
@@ -39,149 +39,156 @@
         android:id="@+id/grid_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/buttonSolveAI"
         android:layout_margin="5dp"
         android:columnCount="3"
-        android:rowCount="3">
+        android:rowCount="3"
+        app:layout_constraintBottom_toTopOf="@id/buttonSolveAI"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:layout_row="0"
             android:id="@+id/button1"
-            android:layout_column="0"
-            android:backgroundTint="#f0f0f0"
-            android:text="1"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="50dp"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
             android:layout_columnWeight="1"
-            android:layout_rowWeight="1"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="1" />
 
         <Button
-            android:layout_row="0"
-            android:layout_column="1"
             android:id="@+id/button2"
-            android:backgroundTint="#f0f0f0"
-
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
-            android:text="2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"/>
-
-        <Button
             android:layout_row="0"
-            android:layout_marginEnd="10dp"
-            android:layout_column="2"
-            android:backgroundTint="#f0f0f0"
-            android:id="@+id/button3"
-            android:layout_marginBottom="50dp"
+
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
             android:layout_marginTop="50dp"
-            android:text="3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"/>
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="2" />
 
         <Button
-            android:layout_row="1"
-            android:layout_column="0"
+            android:id="@+id/button3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="3" />
+
+        <Button
             android:id="@+id/button4"
-            android:backgroundTint="#f0f0f0"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="50dp"
-            android:text="4"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"/>
-
-        <Button
             android:layout_row="1"
-            android:layout_column="1"
-            android:id="@+id/button5"
-            android:backgroundTint="#f0f0f0"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="50dp"
-            android:text="5"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"/>
-
-        <Button
-            android:layout_row="1"
-            android:layout_column="2"
-            android:id="@+id/button6"
-            android:backgroundTint="#f0f0f0"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="50dp"
-            android:text="6"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"/>
-
-        <Button
-            android:layout_row="2"
+            android:layout_rowWeight="1"
             android:layout_column="0"
-            android:id="@+id/button7"
-            android:text="7"
+            android:layout_columnWeight="1"
             android:layout_marginStart="10dp"
-            android:backgroundTint="#f0f0f0"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="50dp"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"/>
+            android:backgroundTint="#f0f0f0"
+            android:text="4" />
 
         <Button
-            android:layout_row="2"
+            android:id="@+id/button5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
             android:layout_column="1"
-            android:text="8"
-            android:backgroundTint="#f0f0f0"
-            android:id="@+id/button8"
+            android:layout_columnWeight="1"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="50dp"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"/>
+            android:backgroundTint="#f0f0f0"
+            android:text="5" />
 
         <Button
-            android:layout_row="2"
-            android:layout_column="2"
-            android:id="@+id/button9"
-            android:text="0"
-            android:backgroundTint="#f0f0f0"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="50dp"
+            android:id="@+id/button6"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="2"
             android:layout_columnWeight="1"
-            android:layout_rowWeight="1"/>
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_row="2"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_row="2"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_row="2"
+            android:layout_rowWeight="1"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="0" />
     </GridLayout>
 
     <Button
         android:id="@+id/buttonSolveAI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#f0f0f0"
         android:layout_marginBottom="40dp"
+        android:backgroundTint="#f0f0f0"
         android:text="Solve AI"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"></Button>
 
-    </Button>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/congratulationAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="congratulation.json"
+        app:lottie_loop="false"
+        app:lottie_speed="1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

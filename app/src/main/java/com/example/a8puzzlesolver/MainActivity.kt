@@ -1,38 +1,40 @@
 package com.example.a8puzzlesolver
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.a8puzzlesolver.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var buttons: List<List<Button>>
+    lateinit var initialState:ArrayList<String>
+    lateinit var goalState:ArrayList<String>
     private lateinit var binding: ActivityMainBinding
     var emptyButtonIndex_i: Int = 2
     var emptyButtonIndex_j: Int = 2
     private lateinit var popupWindowGoalState: PopupWindow
     private lateinit var popupWindowAlgos: PopupWindow
-    private lateinit var handler: Handler
-    private lateinit var runnable: Runnable
+    private lateinit var popupWindowCongratulation: PopupWindow
     private lateinit var textView: TextView
-
+    private lateinit var mediaPlayer:MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         supportActionBar?.title = "Solve 8 Puzzle"
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.title_bar)))
@@ -62,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
         handler.post(runnable)
 
+        mediaPlayer = MediaPlayer.create(this,R.raw.success1)
 
         //listing all buttons
         buttons = listOf(
@@ -82,15 +85,15 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val initState = intent.getStringArrayListExtra("initState")
-        val goalState = intent.getStringArrayListExtra("goalState")
+        initialState = intent.getStringArrayListExtra("initState")!!
+        goalState = intent.getStringArrayListExtra("goalState")!!
 
         // getting index of empty tile
         var index = 0
         for (i in 0..2) {
             for (j in 0..2) {
                 //Log.e("Value at $i,$j", "${initState?.get(index)}", )
-                buttons[i][j].text = initState!![index].toString()
+                buttons[i][j].text = initialState!![index].toString()
                 if (buttons[i][j].text.toString() == "0") {
                     emptyButtonIndex_i = i
                     emptyButtonIndex_j = j
@@ -100,17 +103,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         //initialize pop up view
-        val popviewGoalState = LayoutInflater.from(this).inflate(R.layout.activity_goal_state_popup, null)
-        val popviewAlgos = LayoutInflater.from(this).inflate(R.layout.searching_algo_popup, null)
-        popviewGoalState.findViewById<TextView>(R.id.popup_goal00).text = goalState?.get(0).toString()
-        popviewGoalState.findViewById<TextView>(R.id.popup_goal01).text = goalState?.get(1).toString()
-        popviewGoalState.findViewById<TextView>(R.id.popup_goal02).text = goalState?.get(2).toString()
-        popviewGoalState.findViewById<TextView>(R.id.popup_goal10).text = goalState?.get(3).toString()
-        popviewGoalState.findViewById<TextView>(R.id.popup_goal11).text = goalState?.get(4).toString()
-        popviewGoalState.findViewById<TextView>(R.id.popup_goal12).text = goalState?.get(5).toString()
-        popviewGoalState.findViewById<TextView>(R.id.popup_goal20).text = goalState?.get(6).toString()
-        popviewGoalState.findViewById<TextView>(R.id.popup_goal21).text = goalState?.get(7).toString()
-        popviewGoalState.findViewById<TextView>(R.id.popup_goal22).text = goalState?.get(8).toString()
+        val popupViewGoalState = LayoutInflater.from(this).inflate(R.layout.activity_goal_state_popup, null)
+        val popupViewAlgos = LayoutInflater.from(this).inflate(R.layout.searching_algo_popup, null)
+        val popupViewCongratulation = LayoutInflater.from(this).inflate(R.layout.congratulations_popup,null)
+
+        popupViewGoalState.findViewById<TextView>(R.id.popup_goal00).text = goalState?.get(0).toString()
+        popupViewGoalState.findViewById<TextView>(R.id.popup_goal01).text = goalState?.get(1).toString()
+        popupViewGoalState.findViewById<TextView>(R.id.popup_goal02).text = goalState?.get(2).toString()
+        popupViewGoalState.findViewById<TextView>(R.id.popup_goal10).text = goalState?.get(3).toString()
+        popupViewGoalState.findViewById<TextView>(R.id.popup_goal11).text = goalState?.get(4).toString()
+        popupViewGoalState.findViewById<TextView>(R.id.popup_goal12).text = goalState?.get(5).toString()
+        popupViewGoalState.findViewById<TextView>(R.id.popup_goal20).text = goalState?.get(6).toString()
+        popupViewGoalState.findViewById<TextView>(R.id.popup_goal21).text = goalState?.get(7).toString()
+        popupViewGoalState.findViewById<TextView>(R.id.popup_goal22).text = goalState?.get(8).toString()
 
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -121,25 +126,37 @@ class MainActivity : AppCompatActivity() {
 //        var popupWindow = PopupWindow(popupView, width, height)
 
 
-        popupWindowGoalState = PopupWindow(popviewGoalState, width, ViewGroup.LayoutParams.WRAP_CONTENT)
-        popupWindowAlgos = PopupWindow(popviewAlgos,width,ViewGroup.LayoutParams.WRAP_CONTENT)
-        popupWindowGoalState.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        popupWindowAlgos.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        popupWindowGoalState = PopupWindow(popupViewGoalState, width, ViewGroup.LayoutParams.WRAP_CONTENT)
+        popupWindowAlgos = PopupWindow(popupViewAlgos,width,ViewGroup.LayoutParams.WRAP_CONTENT)
+//        popupWindowGoalState.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        popupWindowAlgos.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         popupWindowGoalState.animationStyle = R.style.PopupAnimation
         popupWindowAlgos.animationStyle = R.style.PopupAnimation
+        popupWindowCongratulation = PopupWindow(popupViewCongratulation,width,ViewGroup.LayoutParams.WRAP_CONTENT)
+//        popupViewCongratulation.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val closeButton = popviewGoalState.findViewById<Button>(R.id.close_button)
-        val closeButtonSearchingAlgo = popviewAlgos.findViewById<ImageButton>(R.id.closeButtonSearchingAlgosPopup)
-        closeButton.setOnClickListener {
+        val closeButtonGoalSate = popupViewGoalState.findViewById<Button>(R.id.close_button_goal_state)
+        val closeButtonSearchingAlgo = popupViewAlgos.findViewById<ImageButton>(R.id.closeButtonSearchingAlgosPopup)
+        val closeButtonCongratulationPopup = popupViewCongratulation.findViewById<Button>(R.id.btn_close_congratulation_popup)
+        val buttonNewPuzzleCongratulationPopup = popupViewCongratulation.findViewById<Button>(R.id.btn_new_puzzle_congratulation_popup)
+
+        closeButtonGoalSate.setOnClickListener {
             popupWindowGoalState.dismiss()
         }
+
         closeButtonSearchingAlgo.setOnClickListener {
             popupWindowAlgos.dismiss()
         }
 
-//        popviewGoalState.findViewById<Button>(R.id.close_button).setOnClickListener {
-//            popupWindowGoalState.dismiss()
-//        }
+        closeButtonCongratulationPopup.setOnClickListener{
+            popupWindowCongratulation.dismiss()
+        }
+        buttonNewPuzzleCongratulationPopup.setOnClickListener {
+            val intent = Intent(this, stateInitActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        }
+
         binding.iButton.setOnClickListener {
             popupWindowGoalState.showAtLocation(binding.iButton, Gravity.CENTER, 0, 0)
         }
@@ -147,6 +164,7 @@ class MainActivity : AppCompatActivity() {
         binding.buttonSolveAI.setOnClickListener{
             popupWindowAlgos.showAtLocation(binding.buttonSolveAI,Gravity.CENTER,0,0)
         }
+
 
 
 
@@ -160,6 +178,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun isSolved(): Boolean {
+        for (i in 0 until buttons.size) {
+            for (j in 0 until buttons[i].size) {
+                val buttonText = buttons[i][j].text.toString()
+                if (buttonText != goalState!![i * buttons.size + j]) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
 
     private fun swapButtons(i: Int, j: Int) {
         val clickedButton = buttons[i][j]
@@ -183,6 +214,18 @@ class MainActivity : AppCompatActivity() {
             // Update the background color of the buttons to indicate the swap
             clickedButton.setBackgroundColor(Color.parseColor("#5a5a5a"))
             emptyButton.setBackgroundColor(Color.parseColor("#f0f0f0"))
+            if(isSolved())
+            {
+//                Toast.makeText(this, "Congratulations", Toast.LENGTH_SHORT).show()
+                val anim = binding.congratulationAnimationView
+
+                Handler(Looper.getMainLooper()).postDelayed(Runnable{
+                    anim.visibility = View.VISIBLE
+                    anim.playAnimation()
+                },200)
+                popupWindowCongratulation.showAtLocation(binding.root,Gravity.CENTER,0,0)
+                mediaPlayer.start()
+            }
         }
     }
 }

@@ -203,45 +203,6 @@ class stateInitActivity : AppCompatActivity() {
         return false
     }
 
-    // Function to check if the given puzzle is solvable
-//    private fun isSolvable(
-//        initialStateArray: ArrayList<String>,
-//        goalStateArray: ArrayList<String>
-//    ): Boolean {
-//        val initialState = stringArrayToIntArray(initialStateArray)
-//        val goalState = stringArrayToIntArray(goalStateArray)
-//        val puzzleSize = Math.sqrt(initialState.size.toDouble()).toInt()
-//        var inversionCount = 0
-//        var blankTileRow = 0
-//
-//        // Calculate the inversion count
-//        for (i in 0 until initialState.size - 1) {
-//            for (j in i + 1 until initialState.size) {
-//                if (initialState[i] > initialState[j] && initialState[i] != 0 && initialState[j] != 0) {
-//                    inversionCount++
-//                }
-//            }
-//        }
-//
-//        // Calculate the row of the blank tile
-//        for (i in 0 until initialState.size) {
-//            if (initialState[i] == 0) {
-//                blankTileRow = i / puzzleSize + 1
-//            }
-//        }
-//
-//        // Check if the puzzle is solvable
-//        return if (puzzleSize % 2 == 1) {
-//            inversionCount % 2 == 0
-//        } else {
-//            val blankTileInOddRowFromBottom = (puzzleSize - blankTileRow) % 2 == 1
-//            if (inversionCount % 2 == 0) {
-//                blankTileInOddRowFromBottom
-//            } else {
-//                !blankTileInOddRowFromBottom
-//            }
-//        }
-//    }
     private fun isSolvable(initialStateArray: ArrayList<String>, goalStateArray: ArrayList<String>): Boolean {
         val initialState = stringArrayToIntArray(initialStateArray)
         val goalState = stringArrayToIntArray(goalStateArray)
