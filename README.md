@@ -30,7 +30,7 @@ This app solves 8 Puzzle Problem, by doing manually or you can solve it by AI.
   <img src="https://user-images.githubusercontent.com/85051271/234066350-24af3cf7-d970-489a-85ab-fd9726e23674.png" alt="Image 2" style="width: 250px; margin-right: 40px;">
 </div>
 
-## Authors
+## Developers
 
 - [MrBT007](https://github.com/MrBT007)
 
