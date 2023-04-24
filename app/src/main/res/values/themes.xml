@@ -14,4 +14,11 @@
         <!-- Customize your theme here. -->
         <item name="android:navigationBarColor">@color/title_bar</item>
     </style>
+    <style name="Theme.8PuzzleSolver.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.8PuzzleSolver.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.8PuzzleSolver.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

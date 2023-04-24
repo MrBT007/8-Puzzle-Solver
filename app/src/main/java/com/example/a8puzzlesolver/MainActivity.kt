@@ -14,11 +14,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import com.example.a8puzzlesolver.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     lateinit var buttons: List<List<Button>>
     lateinit var initialState:ArrayList<String>
     lateinit var goalState:ArrayList<String>
@@ -34,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         supportActionBar?.title = "Solve 8 Puzzle"
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.title_bar)))
@@ -139,6 +137,40 @@ class MainActivity : AppCompatActivity() {
         val closeButtonSearchingAlgo = popupViewAlgos.findViewById<ImageButton>(R.id.closeButtonSearchingAlgosPopup)
         val closeButtonCongratulationPopup = popupViewCongratulation.findViewById<Button>(R.id.btn_close_congratulation_popup)
         val buttonNewPuzzleCongratulationPopup = popupViewCongratulation.findViewById<Button>(R.id.btn_new_puzzle_congratulation_popup)
+        val dfsButton = popupViewAlgos.findViewById<Button>(R.id.dfs_button)
+        val bfsButton = popupViewAlgos.findViewById<Button>(R.id.bfs_button)
+        val aStarButton = popupViewAlgos.findViewById<Button>(R.id.a_star_button)
+        val hillClimbingButton = popupViewAlgos.findViewById<Button>(R.id.hill_climbing_button)
+
+        //sample to show the traversal path
+        dfsButton.setOnClickListener{
+            val intent = Intent(this, TraversalPathViewActivity::class.java)
+            intent.putStringArrayListExtra("initState", initialState)
+            intent.putStringArrayListExtra("goalState", goalState)
+            intent.putExtra("algo",1)
+            startActivity(intent)
+        }
+        bfsButton.setOnClickListener{
+            val intent = Intent(this, TraversalPathViewActivity::class.java)
+            intent.putStringArrayListExtra("initState", initialState)
+            intent.putStringArrayListExtra("goalState", goalState)
+            intent.putExtra("algo",2)
+            startActivity(intent)
+        }
+        aStarButton.setOnClickListener{
+            val intent = Intent(this, TraversalPathViewActivity::class.java)
+            intent.putStringArrayListExtra("initState", initialState)
+            intent.putStringArrayListExtra("goalState", goalState)
+            intent.putExtra("algo",3)
+            startActivity(intent)
+        }
+        hillClimbingButton.setOnClickListener{
+            val intent = Intent(this, TraversalPathViewActivity::class.java)
+            intent.putStringArrayListExtra("initState", initialState)
+            intent.putStringArrayListExtra("goalState", goalState)
+            intent.putExtra("algo",4)
+            startActivity(intent)
+        }
 
         closeButtonGoalSate.setOnClickListener {
             popupWindowGoalState.dismiss()
@@ -151,6 +183,8 @@ class MainActivity : AppCompatActivity() {
         closeButtonCongratulationPopup.setOnClickListener{
             popupWindowCongratulation.dismiss()
         }
+
+        //create new puzzle from pop up
         buttonNewPuzzleCongratulationPopup.setOnClickListener {
             val intent = Intent(this, stateInitActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -164,9 +198,6 @@ class MainActivity : AppCompatActivity() {
         binding.buttonSolveAI.setOnClickListener{
             popupWindowAlgos.showAtLocation(binding.buttonSolveAI,Gravity.CENTER,0,0)
         }
-
-
-
 
         buttons[emptyButtonIndex_i][emptyButtonIndex_j].setBackgroundColor(Color.parseColor("#5a5a5a"))
         buttons.forEachIndexed { i, row ->
@@ -191,6 +222,16 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    private fun solvedSuccess() {
+        val anim = binding.congratulationAnimationView
+
+        Handler(Looper.getMainLooper()).postDelayed(Runnable{
+            anim.visibility = View.VISIBLE
+            anim.playAnimation()
+        },200)
+        popupWindowCongratulation.showAtLocation(binding.root, Gravity.CENTER,0,0)
+        mediaPlayer.start()
+    }
 
     private fun swapButtons(i: Int, j: Int) {
         val clickedButton = buttons[i][j]
@@ -214,17 +255,11 @@ class MainActivity : AppCompatActivity() {
             // Update the background color of the buttons to indicate the swap
             clickedButton.setBackgroundColor(Color.parseColor("#5a5a5a"))
             emptyButton.setBackgroundColor(Color.parseColor("#f0f0f0"))
+
             if(isSolved())
             {
-//                Toast.makeText(this, "Congratulations", Toast.LENGTH_SHORT).show()
-                val anim = binding.congratulationAnimationView
-
-                Handler(Looper.getMainLooper()).postDelayed(Runnable{
-                    anim.visibility = View.VISIBLE
-                    anim.playAnimation()
-                },200)
-                popupWindowCongratulation.showAtLocation(binding.root,Gravity.CENTER,0,0)
-                mediaPlayer.start()
+                // if solved pop up the congratulations animation
+                solvedSuccess()
             }
         }
     }

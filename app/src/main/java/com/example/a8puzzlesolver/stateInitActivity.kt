@@ -33,7 +33,8 @@ class stateInitActivity : AppCompatActivity() {
             listOf(4, 6, 1, 5, 8, 2, 7, 3, 0),
             listOf(1, 4, 2, 3, 0, 5, 6, 7, 8),
             listOf(7, 2, 4, 1, 5, 0, 3, 8, 6),
-            listOf(8, 2, 3, 7, 1, 6, 0, 5, 4)
+            listOf(8, 2, 3, 7, 1, 6, 0, 5, 4),
+            listOf(1, 2, 3, 0, 4, 6, 7, 5, 8)
         )
 
         binding.buttonRandom.setOnClickListener {
@@ -203,7 +204,10 @@ class stateInitActivity : AppCompatActivity() {
         return false
     }
 
-    private fun isSolvable(initialStateArray: ArrayList<String>, goalStateArray: ArrayList<String>): Boolean {
+    private fun isSolvable(
+        initialStateArray: ArrayList<String>,
+        goalStateArray: ArrayList<String>
+    ): Boolean {
         val initialState = stringArrayToIntArray(initialStateArray)
         val goalState = stringArrayToIntArray(goalStateArray)
         var initialStateInversionCount = countInversions(initialState)

@@ -6,12 +6,21 @@
         <entry key="..\:/8PuzzleSolver/app/src/main/res/drawable/custom_shape.xml" value="0.12" />
         <entry key="..\:/8PuzzleSolver/app/src/main/res/drawable/rounded_corners_popup.xml" value="0.12" />
         <entry key="..\:/8PuzzleSolver/app/src/main/res/drawable/table_border.xml" value="0.12" />
+        <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/activity_base.xml" value="0.25677083333333334" />
         <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/activity_goal_state_popup.xml" value="0.25677083333333334" />
         <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/activity_pdf_view.xml" value="0.2" />
         <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/activity_state_init.xml" value="0.25677083333333334" />
+        <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/activity_traversal_path_view.xml" value="0.25677083333333334" />
         <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/congratulations_popup.xml" value="0.2557291666666667" />
+        <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/content_base.xml" value="0.25677083333333334" />
+        <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/dialog_progress.xml" value="0.2557291666666667" />
         <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/goal_state_popup.xml" value="0.2557291666666667" />
+        <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/item_puzzle_state.xml" value="0.2557291666666667" />
+        <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/recycler_item.xml" value="0.1078125" />
+        <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/recycler_view.xml" value="0.2" />
         <entry key="..\:/8PuzzleSolver/app/src/main/res/layout/searching_algo_popup.xml" value="0.2557291666666667" />
+        <entry key="..\:/8PuzzleSolver/app/src/main/res/xml/file_path.xml" value="0.1078125" />
       </map>
     </option>
   </component>
