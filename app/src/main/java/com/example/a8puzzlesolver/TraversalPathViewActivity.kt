@@ -51,11 +51,13 @@ class TraversalPathViewActivity : BaseActivity() {
                         val responseBody = response.body()
                         if (responseBody != null && responseBody.success) {
                             val path = responseBody.path
-                            showSnackBar("Solved with ${algosWithIndex[algoNumber-1]}",R.color.colorSnackBarSuccess)
+                            val steps = responseBody.steps
+                            val executionTime = responseBody.executionTime
+                            showSnackBar("Solved with ${algosWithIndex[algoNumber-1]} in $steps steps and $executionTime ms", R.color.colorSnackBarSuccess)
+//                            showSnackBar("Solved with ${algosWithIndex[algoNumber-1]}",R.color.colorSnackBarSuccess)
                             traversalPath = convertToPuzzleState(path)
 
                             showPath(traversalPath)
-
                         } else {
                             showSnackBar("Error : ${responseBody?.message}",R.color.colorSnackBarError)
 

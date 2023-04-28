@@ -18,7 +18,9 @@ interface AzureFunctionApi {
         val success: Boolean,
         val result: String?,
         val message: String?,
-        val path: List<List<List<Int>>>?
+        val path: List<List<List<Int>>>?,
+        val steps: Int?,
+        val executionTime: Double?
     )
 
 

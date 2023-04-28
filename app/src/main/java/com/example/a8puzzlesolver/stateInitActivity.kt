@@ -29,12 +29,14 @@ class stateInitActivity : AppCompatActivity() {
         goalStateArray = ArrayList()
 
         val randomStatesArray = listOf(
-            listOf(2, 8, 3, 1, 6, 4, 7, 5, 0),
-            listOf(4, 6, 1, 5, 8, 2, 7, 3, 0),
             listOf(1, 4, 2, 3, 0, 5, 6, 7, 8),
-            listOf(7, 2, 4, 1, 5, 0, 3, 8, 6),
             listOf(8, 2, 3, 7, 1, 6, 0, 5, 4),
-            listOf(1, 2, 3, 0, 4, 6, 7, 5, 8)
+            listOf(1, 2, 3, 0, 4, 6, 7, 5, 8),
+            listOf(1, 2, 0, 4, 5, 3, 7, 8, 6),
+            listOf(0, 1, 3, 4, 2, 5, 7, 8, 6),
+            listOf(1, 3, 6, 4, 0, 2, 7, 5, 8),
+            listOf(1, 2, 3, 5, 6, 0, 7, 8, 4),
+            listOf(1, 0, 2, 4, 5, 3, 7, 8, 6),
         )
 
         binding.buttonRandom.setOnClickListener {
