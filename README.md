@@ -31,6 +31,7 @@ This app solves 8 Puzzle Problem, by doing manually or you can solve it by AI.
 </div>
 
 ### Download APK : [8 Puzzle Solver](https://mega.nz/file/CF01ULYC#_xmJoLwrPR--yvzRISfiPSqxwti3--AJt8sLYIbJtCM)
+* As mentioned We have deployed algorithms on Azure, might possible server is not started.
 
 ## Project Contributers
 
